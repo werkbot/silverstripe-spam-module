@@ -1,0 +1,15 @@
+{
+    "name": "werkbot/werkbot-spam-protection",
+    "description": "Werkbot Spam Protection Fields",
+    "type": "silverstripe-vendormodule",
+    "require": {
+        "silverstripe/cms": "~4.5",
+        "silverstripe/framework": "~4.5",
+        "silverstripe/spamprotection": "~3.0"
+    },
+    "autoload": {
+        "psr-4": {
+        "Werkbot\\SpamProtection\\": "src/"
+        }
+    }
+}

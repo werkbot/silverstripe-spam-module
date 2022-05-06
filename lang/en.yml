@@ -1,0 +1,5 @@
+en:
+  Werkbot\SpamProtection\Honeypot:
+    INVALID: 'Submission has been marked as spam'
+  Werkbot\SpamProtection\Timer:
+    INVALID: 'Submission has been marked as spam'
