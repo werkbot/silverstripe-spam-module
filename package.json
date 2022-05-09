@@ -1,0 +1,35 @@
+{
+  "name": "shoppingcart",
+  "version": "1.0.0",
+  "description": "A silverstripe module for form spam protection",
+  "scripts": {
+    "build": "webpack",
+    "watch": "webpack --watch --progress"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/werkbot/silverstripe-spam-module.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/werkbot/silverstripe-spam-module.gitissues"
+  },
+  "homepage": "https://github.com/werkbot/silverstripe-spam-module.git#readme",
+  "devDependencies": {
+    "webpack": "^2.7.0"
+  },
+  "dependencies": {
+    "@silverstripe/webpack-config": "*",
+    "babel-polyfill": "^6.26.0"
+  },
+  "babel": {
+    "presets": [
+      "env",
+      "react"
+    ],
+    "plugins": [
+      "transform-object-rest-spread"
+    ]
+  }
+}
