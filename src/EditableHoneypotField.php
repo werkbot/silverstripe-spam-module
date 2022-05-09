@@ -4,7 +4,6 @@ namespace Werkbot\SpamProtection;
 /**/
 use Werkbot\SpamProtection\HoneypotField;
 use SilverStripe\Forms\FormField;
-use SilverStripe\Forms\TextField;
 use SilverStripe\UserForms\Model\EditableFormField;
 use SilverStripe\ORM\UnsavedRelationList;
 /**/
@@ -45,9 +44,6 @@ class EditableHoneypotField extends EditableFormField {
     if ($this->Parent()->Fields() instanceof UnsavedRelationList) {
         return $fields;
     }
-    /* Expected Value
-    $ExpectedValue = TextField::create('ExpectedValue', 'If this field is not empty what is the expected value');
-    $fields->addFieldToTab('Root.Main', $ExpectedValue); */
     //
     return $fields;
   }

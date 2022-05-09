@@ -31,7 +31,7 @@ time_not_bot: x
 
 To use the default spam protection file, copy this to the site's main sass file:
 
-`@import '../../../vendor/werkbot/silverstripe-spam-module/sass/_wb-spam.scss';`
+`@import '../../vendor/werkbot/werkbot-spam-protection/sass/_wb-spam.scss';`
 
 If you plan to alter the sass files you can copy this file and the components folder to your sass directory and update accordingly.
 

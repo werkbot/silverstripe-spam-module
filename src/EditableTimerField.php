@@ -4,7 +4,6 @@ namespace Werkbot\SpamProtection;
 /**/
 use Werkbot\SpamProtection\TimerField;
 use SilverStripe\Forms\FormField;
-use SilverStripe\Forms\TextField;
 use SilverStripe\UserForms\Model\EditableFormField;
 use SilverStripe\ORM\UnsavedRelationList;
 /**/
