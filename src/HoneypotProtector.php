@@ -13,8 +13,8 @@ class HoneypotProtector implements SpamProtector {
   public function getFormField($name="_email", $title="This field should be left empty", $value=null) {
     // Send both Honeypot and Timer Fields
     return FieldGroup::create(
-      HoneypotField::create($name, $title, $value)->addExtraClass('wb-spam-hidden'),
-      TimerField::create("time", $title, time())->addExtraClass('wb-spam-hidden')
+      HoneypotField::create($name, $title, $value)->addExtraClass('wb-spam-hidden')->removeClass('honeypot')->setFieldHolderTemplate('Form\\SpamFieldHolder'),
+      TimerField::create("time", $title, time())->addExtraClass('wb-spam-hidden')->removeClass('timer')->setFieldHolderTemplate('Form\\SpamFieldHolder')
     );
   }
   /**

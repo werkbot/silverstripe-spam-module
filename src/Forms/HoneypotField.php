@@ -30,16 +30,29 @@ class HoneypotField extends TextField{
       // Not expecting any value
       $validator->validationError(
         $this->Name,
-        _t('Werkbot\SpamProtection\Honeypot.INVALID', 'Submission has been marked as spam')
+        _t('Werkbot\SpamProtection\Honeypot.INVALID', 'There was an error submitting this form. Please try again.')
       );
       if (intval($ID !== 0)){
-        //$validationResult = new ValidationResult();
-        //$validationResult->addFieldError('Message', _t('Werkbot\SpamProtection\Honeypot.INVALID', 'Submission has been marked as spam'));
-        $form->sessionMessage(_t('Werkbot\SpamProtection\Honeypot.INVALID', 'Submission has been marked as spam'), 'bad');
+        $form->sessionMessage(_t('Werkbot\SpamProtection\Honeypot.INVALID', 'There was an error submitting this form. Please try again.'), 'bad');
       }
       return false;
     }
     //
     return true;
+  }
+  /**
+   * @return array
+   */
+  public function getAttributes() {
+    //
+    $attributes = [
+      'class' => 'wb-spam-hidden',
+      'style' => 'height: 1px; opacity: 0; margin: 0;'
+    ];
+    //
+    return array_merge(
+      parent::getAttributes(),
+      $attributes
+    );
   }
 }

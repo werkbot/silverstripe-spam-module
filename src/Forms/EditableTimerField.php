@@ -4,6 +4,7 @@ namespace Werkbot\SpamProtection;
 /**/
 use Werkbot\SpamProtection\TimerField;
 use SilverStripe\Forms\FormField;
+use SilverStripe\Forms\TextField;
 use SilverStripe\UserForms\Model\EditableFormField;
 use SilverStripe\ORM\UnsavedRelationList;
 /**/
@@ -21,7 +22,7 @@ class EditableTimerField extends EditableFormField {
    /**/
    public function getFormField(){
     //
-    $field = TimerField::create($this->Name, $this->Title, time())->addExtraClass('wb-spam-hidden');
+    $field = TimerField::create($this->Name, $this->Title, time())->setFieldHolderTemplate('Form\\SpamFieldHolder');
     $this->doUpdateFormField($field);
     //
     return $field;

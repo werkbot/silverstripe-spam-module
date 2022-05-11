@@ -26,13 +26,6 @@ You can optionally set the time for the Timer Field using the following entry in
 time_not_bot: x
 ```
 
-### sass
-**sass/_wb-spam.scss**
-
-To use the default spam protection file, copy this to the site's main sass file:
-
-`@import '../../vendor/werkbot/werkbot-spam-protection/sass/_wb-spam.scss';`
-
 If you plan to alter the sass files you can copy this file and the components folder to your sass directory and update accordingly.
 
 ## Usage

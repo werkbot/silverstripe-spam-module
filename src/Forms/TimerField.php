@@ -25,11 +25,26 @@ class TimerField extends TextField{
       // Not the expected value, set error
       $validator->validationError(
         $this->Name,
-        _t('Werkbot\SpamProtection\Timer.INVALID', 'Submission has been marked as spam')
+        _t('Werkbot\SpamProtection\Timer.INVALID', 'There was an error submitting this form. Please try again.')
       );
       return false;
     }
     //
     return true;
+  }
+  /**
+   * @return array
+   */
+  public function getAttributes() {
+    //
+    $attributes = [
+      'class' => 'wb-spam-hidden',
+      'style' => 'height: 1px; opacity: 0; margin: 0;'
+    ];
+    //
+    return array_merge(
+      parent::getAttributes(),
+      $attributes
+    );
   }
 }

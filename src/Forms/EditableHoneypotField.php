@@ -4,6 +4,7 @@ namespace Werkbot\SpamProtection;
 /**/
 use Werkbot\SpamProtection\HoneypotField;
 use SilverStripe\Forms\FormField;
+use SilverStripe\Forms\TextField;
 use SilverStripe\UserForms\Model\EditableFormField;
 use SilverStripe\ORM\UnsavedRelationList;
 /**/
@@ -19,7 +20,7 @@ class EditableHoneypotField extends EditableFormField {
    /**/
    public function getFormField(){
     //
-    $field = HoneypotField::create($this->Name, "", null)->addExtraClass('wb-spam-hidden');
+    $field = HoneypotField::create($this->Name, "", null)->setFieldHolderTemplate('Form\\SpamFieldHolder');
     $this->doUpdateFormField($field);
     //
     return $field;
