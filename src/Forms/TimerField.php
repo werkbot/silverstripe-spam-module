@@ -21,7 +21,7 @@ class TimerField extends TextField{
     $Timer = (($this->config()->time_not_bot) ? $this->config()->time_not_bot : $this->time_not_bot);
     $CurrentTime = time();
     // Compare time difference with allowed time difference
-    if ( empty($this->Value()) || (($CurrentTime - $this->Value()) < $Timer) ){
+    if ( empty($this->Value()) || !is_numeric($this->Value()) || (($CurrentTime - $this->Value()) < $Timer) ){
       // Not the expected value, set error
       $validator->validationError(
         $this->Name,
