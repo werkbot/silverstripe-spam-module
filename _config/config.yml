@@ -1,0 +1,12 @@
+---
+Name: honeypotinjector
+---
+SilverStripe\Core\Injector\:
+  SilverStripe\UserForms\Model\EditableFormField:
+    class: Werkbot\SpamProtection\EditableHoneypotField
+---
+Name: timerinjector
+---
+SilverStripe\Core\Injector\:
+  SilverStripe\UserForms\Model\EditableFormField:
+    class: Werkbot\SpamProtection\EditableTimerField

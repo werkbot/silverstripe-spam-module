@@ -1,0 +1,5 @@
+en:
+  Werkbot\SpamProtection\Honeypot:
+    INVALID: 'There was an error submitting this form. Please try again.'
+  Werkbot\SpamProtection\Timer:
+    INVALID: 'There was an error submitting this form. Please try again.'
