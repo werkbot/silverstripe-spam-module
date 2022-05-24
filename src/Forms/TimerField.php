@@ -6,7 +6,9 @@ use SilverStripe\Forms\TextField;
 
 class TimerField extends TextField
 {
-  /**/
+  /**
+   * @config
+   */
     private static $time_not_bot = 10;
   /**
    * Adds in the requirements for the field
