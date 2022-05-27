@@ -2,10 +2,16 @@
   "name": "werkbot/werkbot-spam-protection",
   "description": "Werkbot Spam Protection Fields",
   "type": "silverstripe-vendormodule",
+  "license": "MIT",
+  "homepage": "https://github.com/werkbot/silverstripe-spam-module",
   "require": {
+    "php": "^7.3 || ^8.0",
     "silverstripe/cms": "~4.5",
     "silverstripe/framework": "~4.5",
     "silverstripe/spamprotection": "~3.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.5"
   },
   "autoload": {
     "psr-4": {
