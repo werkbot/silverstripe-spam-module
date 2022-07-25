@@ -21,11 +21,15 @@ class EditableHoneypotField extends EditableFormField
    /**/
     public function getFormField()
     {
+      // Clear Any existing errors
+      $Request = Injector::inst()->get(HTTPRequest::class);
+      $Session = $Request->getSession();
+      $Session->clear('spam-protection-error-exists');
      //
-        $field = HoneypotField::create($this->Name, "", null)->setFieldHolderTemplate('Form\\SpamFieldHolder');
-        $this->doUpdateFormField($field);
+      $field = HoneypotField::create($this->Name, "", null)->setFieldHolderTemplate('Form\\SpamFieldHolder');
+      $this->doUpdateFormField($field);
      //
-        return $field;
+      return $field;
     }
   /**
    * @param FormField $field
@@ -69,6 +73,12 @@ class EditableHoneypotField extends EditableFormField
    */
     protected function updateFormField($field)
     {
-        parent::updateFormField($field);
+      // Add custom error
+      if ($this->CustomErrorMessage <> ""){
+        $field->setAttribute('data-custommsg', (string) $this->CustomErrorMessage);
+      }
+      //
+      parent::updateFormField($field);
     }
+
 }

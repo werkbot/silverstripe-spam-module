@@ -15,20 +15,25 @@ class EditableTimerField extends EditableFormField
     private static $plural_name = 'Timer Spam Protection Fields';
     private static $table_name = 'EditableTimerField';
   /**/
-    private static $db = [];
+  private static $db = [
+    'TimeNotABot' => 'Int'
+  ];
   /**
    * @var FormField
    */
     protected $formField = null;
    /**/
-    public function getFormField()
-    {
-     //
-        $field = TimerField::create($this->Name, $this->Title, time())->setFieldHolderTemplate('Form\\SpamFieldHolder');
-        $this->doUpdateFormField($field);
-     //
-        return $field;
-    }
+   public function getFormField(){
+    // Clear Any existing errors
+    $Request = Injector::inst()->get(HTTPRequest::class);
+    $Session = $Request->getSession();
+    $Session->clear('spam-protection-error-exists');
+    //
+    $field = TimerField::create($this->Name, $this->Title, time())->setFieldHolderTemplate('Form\\SpamFieldHolder');
+    $this->doUpdateFormField($field);
+    //
+    return $field;
+  }
   /**
    * @param FormField $field
    * @return self
@@ -43,17 +48,38 @@ class EditableTimerField extends EditableFormField
    *
    * {@inheritDoc}
    */
-    public function getCMSFields()
-    {
-      //
-        $fields = parent::getCMSFields();
-      //
-        if ($this->Parent()->Fields() instanceof UnsavedRelationList) {
-            return $fields;
-        }
-      //
-        return $fields;
+  public function getCMSFields() {
+    $this->beforeUpdateCMSFields(function ($fields) {
+      $fields->addFieldsToTab(
+        'Root.Main',
+        [
+          NumericField::create(
+            'TimeNotABot',
+            'Minimum amount of time to fill out the form'
+          )->setDescription('Minimum time in seconds it takes to fill out the form, anything less is considered a bot')
+        ]
+      );
+    });
+    //
+    return parent::getCMSFields();
+  }
+  /**
+   * Updates a formfield with the additional metadata specified by this field
+   *
+   * @param FormField $field
+   */
+  protected function updateFormField($field)
+  {
+    parent::updateFormField($field);
+    // Add custom time
+    if (is_numeric($this->TimeNotABot) && $this->TimeNotABot > 0) {
+      $field->setAttribute('data-rule-customtime', (int) $this->TimeNotABot);
     }
+    // Add custom error
+    if ($this->CustomErrorMessage <> ""){
+      $field->setAttribute('data-custommsg', (string) $this->CustomErrorMessage);
+    }
+  }
   /**/
     public function getRequired()
     {
