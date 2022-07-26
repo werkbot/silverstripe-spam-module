@@ -3,6 +3,7 @@
 namespace Werkbot\SpamProtection;
 
 use SilverStripe\Forms\TextField;
+use SilverStripe\Core\Injector\Injector;
 
 class TimerField extends TextField
 {
