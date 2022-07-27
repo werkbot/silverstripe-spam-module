@@ -7,6 +7,7 @@ use SilverStripe\Forms\FormField;
 use SilverStripe\Forms\TextField;
 use SilverStripe\UserForms\Model\EditableFormField;
 use SilverStripe\ORM\UnsavedRelationList;
+use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Core\Injector\Injector;
 
 class EditableHoneypotField extends EditableFormField

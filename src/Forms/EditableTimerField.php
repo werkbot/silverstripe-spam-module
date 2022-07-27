@@ -4,9 +4,10 @@ namespace Werkbot\SpamProtection;
 
 use Werkbot\SpamProtection\TimerField;
 use SilverStripe\Forms\FormField;
-use SilverStripe\Forms\TextField;
+use SilverStripe\Forms\NumericField;
 use SilverStripe\UserForms\Model\EditableFormField;
 use SilverStripe\ORM\UnsavedRelationList;
+use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Core\Injector\Injector;
 
 class EditableTimerField extends EditableFormField
