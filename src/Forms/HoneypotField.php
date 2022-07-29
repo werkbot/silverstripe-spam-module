@@ -29,16 +29,34 @@ class HoneypotField extends TextField
         $ID = substr($StringID[0], strrpos($StringID[0], '_') + 1);
         $ID = rtrim($ID, '"');
       //
+        $Attributes = $this->getAttributes();
+        $Request = Injector::inst()->get(HTTPRequest::class);
+        $Session = $Request->getSession();
+      //
         if (!empty($this->Value())) {
-          // Not expecting any value
-            $validator->validationError(
+          if (!$Session->get('spam-protection-error-exists')) {
+            $Session->set('spam-protection-error-exists', true);
+            // Add custom error message
+            if(isset($Attributes['data-custommsg']) && $Attributes['data-custommsg'] <> ""){
+              $validator->validationError(
                 $this->Name,
-                _t('Werkbot\SpamProtection\Honeypot.INVALID', 'There was an error submitting this form. Please try again.')
-            );
-            if (intval($ID !== 0)) {
-                  $form->sessionMessage(_t('Werkbot\SpamProtection\Honeypot.INVALID', 'There was an error submitting this form. Please try again.'), 'bad');
+                $Attributes['data-custommsg']
+              );
+              if (intval($ID !== 0)) {
+                $form->sessionMessage($Attributes['data-custommsg'], 'bad');
+              }
+            } else {
+              // Not expecting any value
+              $validator->validationError(
+                  $this->Name,
+                  _t('Werkbot\SpamProtection\Honeypot.INVALID', 'There was an error submitting this form. Please try again.')
+              );
+              if (intval($ID !== 0)) {
+                $form->sessionMessage(_t('Werkbot\SpamProtection\Honeypot.INVALID', 'There was an error submitting this form. Please try again.'), 'bad');
+              }
             }
-            return false;
+          }
+          return false;
         }
       //
         return true;

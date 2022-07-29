@@ -3,6 +3,8 @@
 namespace Werkbot\SpamProtection;
 
 use SilverStripe\Forms\TextField;
+use SilverStripe\Control\HTTPRequest;
+use SilverStripe\Core\Injector\Injector;
 
 class TimerField extends TextField
 {
@@ -22,17 +24,31 @@ class TimerField extends TextField
   /**/
     public function validate($validator)
     {
+      $Attributes = $this->getAttributes();
+      $Request = Injector::inst()->get(HTTPRequest::class);
+      $Session = $Request->getSession();
       //
-        $Timer = (($this->config()->time_not_bot) ? $this->config()->time_not_bot : $this->time_not_bot);
+        $Timer = ((isset($Attributes['data-rule-customtime'])) ? $Attributes['data-rule-customtime'] : (($this->config()->time_not_bot) ? $this->config()->time_not_bot : $this->time_not_bot));
         $CurrentTime = time();
       // Compare time difference with allowed time difference
-        if (empty($this->Value()) || !is_numeric($this->Value()) || (($CurrentTime - $this->Value()) < $Timer)) {
-          // Not the expected value, set error
-            $validator->validationError(
+        if ((empty($this->Value()) || !is_numeric($this->Value()) || (($CurrentTime - $this->Value()) < $Timer))) {
+          if (!$Session->get('spam-protection-error-exists')) {
+            // Set Session
+            $Session->set('spam-protection-error-exists', true);
+            //
+            if(isset($Attributes['data-custommsg']) && $Attributes['data-custommsg'] <> ""){
+              $validator->validationError(
+                $this->Name,
+                $Attributes['data-custommsg']
+              );
+            } else {
+              $validator->validationError(
                 $this->Name,
                 _t('Werkbot\SpamProtection\Timer.INVALID', 'There was an error submitting this form. Please try again.')
-            );
-            return false;
+              );
+            }
+          }
+          return false;
         }
       //
         return true;
