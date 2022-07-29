@@ -15,8 +15,8 @@ class HoneypotProtector implements SpamProtector
     {
       // Send both Honeypot and Timer Fields
         return FieldGroup::create(
-            HoneypotField::create($name, $title, $value)->addExtraClass('wb-spam-hidden')->removeClass('honeypot')->setFieldHolderTemplate('Form\\SpamFieldHolder'),
-            TimerField::create("time", $title, time())->addExtraClass('wb-spam-hidden')->removeClass('timer')->setFieldHolderTemplate('Form\\SpamFieldHolder')
+            HoneypotField::create($name, $title, $value)->addExtraClass('wb-spam-hidden')->removeExtraClass('honeypot')->setFieldHolderTemplate('Form\\SpamFieldHolder'),
+            TimerField::create("time", $title, time())->addExtraClass('wb-spam-hidden')->removeExtraClass('timer')->setFieldHolderTemplate('Form\\SpamFieldHolder')
         );
     }
   /**
