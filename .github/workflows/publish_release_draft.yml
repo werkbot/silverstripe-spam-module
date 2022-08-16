@@ -17,7 +17,7 @@ jobs:
         id: get_release_id
         run: |
           TOKEN=${{ secrets.GITHUB_TOKEN }}
-          RELEASEID=$(curl -H "Accept: application/vnd.github+json" -H "Authorization: token $TOKEN" https://api.github.com/repos/werkbot/silverstripe-spam-module/releases)
+          RELEASEID=$(curl -H "Accept: application/vnd.github+json" -H "Authorization: token $TOKEN" https://api.github.com/repos/aletail/silverstripe-spam-module/releases)
           RELEASEID=$(echo "$RELEASEID" | grep \"id\"  | head -n 1 | sed -re "s/[a-z]*//g;s/[-|,|:|'\"]//g;s/\s//g")
           echo "::set-output name=release_id::$RELEASEID"
         env:
