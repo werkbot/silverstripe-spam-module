@@ -1,0 +1,52 @@
+name: Sync develop branch with main
+
+on:
+  push:
+    branches:
+      - main
+      - support/*
+
+permissions:
+  contents: write
+
+jobs:
+  sync_develop:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+
+      # Check if this is a support branch
+      - name: Check For support branch
+        id: is_support_branch
+        continue-on-error: true
+        run: |
+          FILTEREDBRANCHNAME=$(git branch | grep "\* support")
+          echo "::set-output name=filtered_branch_name::$FILTEREDBRANCHNAME"
+
+      # Get the support branch
+      - name: Get support branch
+        id: get_support_branch
+        if: steps.is_support_branch.outputs.filtered_branch_name != ''
+        run: |
+          SUPPORTBRANCH=$(git branch | grep \* | sed -re "s/[\*|\ ]//g")
+          echo "::set-output name=support_branch::$SUPPORTBRANCH"
+
+      - name: Merge support -> main
+        uses: devmasx/merge-branch@master
+        if: steps.is_support_branch.outputs.filtered_branch_name != ''
+        with:
+          type: now
+          from_branch: ${{ steps.get_support_branch.outputs.support_branch }}
+          target_branch: main
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          message: Merged ${{ steps.get_support_branch.outputs.support_branch }} into main
+
+      - name: Merge main -> develop
+        uses: devmasx/merge-branch@master
+        with:
+          type: now
+          from_branch: main
+          target_branch: develop
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          message: Merged main into develop
