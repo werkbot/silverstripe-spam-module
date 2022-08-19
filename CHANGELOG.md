@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.4 - 2022-08-19
+
+
+
+
 ## [1.0.0](https://github.com/werkbot/silverstripe-spam-module/tree/1.0.0) (2022-05-13)
 
 [Full Changelog](https://github.com/werkbot/silverstripe-spam-module/compare/d7346faab2d0f69509d4aa70aa311fa45c1fc77c...1.0.0)
