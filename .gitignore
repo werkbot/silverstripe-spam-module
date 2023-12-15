@@ -1,1 +1,7 @@
-/node_modules
+composer.lock
+doctum_build
+doctum_cache
+gh-payload.json
+node_modules
+vendor
+
