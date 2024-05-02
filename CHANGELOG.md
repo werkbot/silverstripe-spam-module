@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.0 - 2024-05-02
+## 🎉 New Features
+- Merge pull request [#7](https://github.com/werkbot/silverstripe-spam-module/pull/7) by [tiller1010](https://github.com/tiller1010) from werkbot/release/1.0.4
+
+
+
 ## 1.0.4 - 2022-08-19
 
 
