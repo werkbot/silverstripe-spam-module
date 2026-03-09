@@ -6,7 +6,6 @@ use Werkbot\SpamProtection\TimerField;
 use SilverStripe\Forms\FormField;
 use SilverStripe\Forms\NumericField;
 use SilverStripe\UserForms\Model\EditableFormField;
-use SilverStripe\ORM\UnsavedRelationList;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Core\Injector\Injector;
 
@@ -55,7 +54,7 @@ class EditableTimerField extends EditableFormField
    */
   public function getCMSFields()
   {
-    $this->beforeUpdateCMSFields(function ($fields) {
+    $this->beforeUpdateCMSFields(function ($fields): void {
       $fields->addFieldsToTab(
         'Root.Main',
         [
