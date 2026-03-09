@@ -2,11 +2,11 @@
 
 namespace Werkbot\SpamProtection\Forms;
 
-use SilverStripe\Forms\TextField;
-use SilverStripe\Control\Controller;
+use Override;
 use SilverStripe\Control\HTTPRequest;
-use SilverStripe\ORM\ValidationResult;
 use SilverStripe\Core\Injector\Injector;
+use SilverStripe\Core\Validation\ValidationResult;
+use SilverStripe\Forms\TextField;
 
 class HoneypotField extends TextField
 {
@@ -15,13 +15,16 @@ class HoneypotField extends TextField
    * @param array $properties Array of properties for the form element (not used)
    * @return string Rendered field template
    */
-  public function Field($properties = array())
+  #[Override]
+  public function Field($properties = [])
   {
     return parent::Field($properties);
   }
 
-  public function validate($validator)
+  #[Override]
+  public function validate(): ValidationResult
   {
+    $validationResult = parent::validate();
     $form = $this->getForm();
     $attributes = $form->FormAttributes();
     $StringID = explode(" ", $attributes);
@@ -37,7 +40,7 @@ class HoneypotField extends TextField
         $Session->set('spam-protection-error-exists', true);
         // Add custom error message
         if(isset($Attributes['data-custommsg']) && $Attributes['data-custommsg'] <> ""){
-          $validator->validationError(
+          $validationResult->addFieldError(
             $this->Name,
             $Attributes['data-custommsg']
           );
@@ -46,7 +49,7 @@ class HoneypotField extends TextField
           }
         } else {
           // Not expecting any value
-          $validator->validationError(
+          $validationResult->addFieldError(
             $this->Name,
             _t('Werkbot\SpamProtection\Honeypot.INVALID', 'There was an error submitting this form. Please try again.')
           );
@@ -55,15 +58,15 @@ class HoneypotField extends TextField
           }
         }
       }
-      return false;
     }
 
-    return true;
+    return $validationResult;
   }
 
   /**
    * @return array
    */
+  #[Override]
   public function getAttributes()
   {
     $attributes = [
