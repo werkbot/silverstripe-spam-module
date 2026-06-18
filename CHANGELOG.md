@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.0.1 - 2026-06-18
+
+
+
+
 ## 3.0.0 - 2024-12-30
 ## 🎉 New Features
 - psr-4, psr-12, and doctum ([#11](https://github.com/werkbot/silverstripe-spam-module/pull/11) by [tiller1010](https://github.com/tiller1010))
