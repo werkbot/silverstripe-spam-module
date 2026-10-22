@@ -2,9 +2,11 @@
 
 namespace Werkbot\SpamProtection\Forms;
 
-use SilverStripe\Forms\TextField;
+use Override;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Core\Injector\Injector;
+use SilverStripe\Core\Validation\ValidationResult;
+use SilverStripe\Forms\TextField;
 
 class TimerField extends TextField
 {
@@ -17,18 +19,21 @@ class TimerField extends TextField
    * @param array $properties Array of properties for the form element (not used)
    * @return string Rendered field template
    */
-  public function Field($properties = array())
+  #[Override]
+  public function Field($properties = [])
   {
     return parent::Field($properties);
   }
 
-  public function validate($validator)
+  #[Override]
+  public function validate(): ValidationResult
   {
+    $validationResult = parent::validate();
     $Attributes = $this->getAttributes();
     $Request = Injector::inst()->get(HTTPRequest::class);
     $Session = $Request->getSession();
 
-    $Timer = ((isset($Attributes['data-rule-customtime'])) ? $Attributes['data-rule-customtime'] : (($this->config()->time_not_bot) ? $this->config()->time_not_bot : $this->time_not_bot));
+    $Timer = ($Attributes['data-rule-customtime'] ?? (($this->config()->time_not_bot ?: $this->time_not_bot)));
     $CurrentTime = time();
 
     // Compare time difference with allowed time difference
@@ -38,26 +43,26 @@ class TimerField extends TextField
         $Session->set('spam-protection-error-exists', true);
 
         if(isset($Attributes['data-custommsg']) && $Attributes['data-custommsg'] <> ""){
-          $validator->validationError(
+          $validationResult->addFieldError(
             $this->Name,
             $Attributes['data-custommsg']
           );
         } else {
-          $validator->validationError(
+          $validationResult->addFieldError(
             $this->Name,
             _t('Werkbot\SpamProtection\Timer.INVALID', 'There was an error submitting this form. Please try again.')
           );
         }
       }
-      return false;
     }
 
-    return true;
+    return $validationResult;
   }
 
   /**
    * @return array
    */
+  #[Override]
   public function getAttributes()
   {
     $attributes = [
